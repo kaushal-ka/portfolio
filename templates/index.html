@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaushal Karna | Full Stack Developer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <!-- Optionally load a Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    >
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+      <div class="home-content">
+        <img src="{{ url_for('static', filename='profile.jpg') }}" alt="Profile Picture" class="profile-img" />
+        <h1>Kaushal Karna</h1>
+        <p>Full Stack Developer &amp; Python Programmer</p>
+        <p class="tagline">
+          Crafting clean, responsive, and user-friendly digital experiences.
+        </p>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>
+        Hi, I'm Kaushal Karna—a passionate web developer with a keen eye for design and functionality.
+        I specialize in creating robust web applications using modern technologies like HTML, CSS, JavaScript, 
+        and Python. I enjoy turning complex challenges into elegant solutions and continuously learning to keep
+        up with the latest trends.
+      </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills-container">
+        <div class="skill">
+          <h3>HTML &amp; CSS</h3>
+          <p>Expert</p>
+        </div>
+        <div class="skill">
+          <h3>JavaScript</h3>
+          <p>Advanced</p>
+        </div>
+        <div class="skill">
+          <h3>Python</h3>
+          <p>Advanced</p>
+        </div>
+        <div class="skill">
+          <h3>Django &amp; Flask</h3>
+          <p>Intermediate</p>
+        </div>
+        <div class="skill">
+          <h3>React</h3>
+          <p>Intermediate</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>E-commerce Platform</h3>
+          <p>A full-featured online store built with Django and React.</p>
+        </div>
+        <div class="project-card">
+          <h3>Portfolio Website</h3>
+          <p>A modern, responsive personal portfolio showcasing my work and skills.</p>
+        </div>
+        <div class="project-card">
+          <h3>Chatbot Application</h3>
+          <p>A smart chatbot powered by Python and NLP libraries to assist users.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <!-- Display flash messages -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+      <form class="contact-form" id="contactForm" action="{{ url_for('submit_contact') }}" method="POST">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <script>
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // Form submission handling
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert("Thank you for your message! I will get back to you soon.");
+          this.reset();
+        });
+
+      // Active link highlighting based on scroll position
+      window.addEventListener("scroll", function () {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll("nav ul li a");
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (pageYOffset >= sectionTop - sectionHeight / 3) {
+            const currentId = section.getAttribute("id");
+            navLinks.forEach((link) => {
+              link.classList.remove("active");
+              if (link.getAttribute("href").includes(currentId)) {
+                link.classList.add("active");
+              }
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
