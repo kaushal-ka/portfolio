@@ -23,7 +23,7 @@ def submit_contact():
     name = request.form.get('name', '').strip()
     email = request.form.get('email', '').strip()
     message = request.form.get('message', '').strip()
-
+    print(f"Name: {name}, Email: {email}, Message: {message}")
     # Basic validation can be added here if needed
     if not name or not email or not message:
         flash("All fields are required!")
@@ -47,10 +47,12 @@ def submit_contact():
             cursor.close()
             conn.close()
 
+            # <-- Here: flash success message after DB insert
             flash("Thank you for your message! I'll get back to you soon.")
         else:
             flash("Unable to connect to the database.")
     except mysql.connector.Error as err:
+        print("MySQL Error:", err)
         flash(f"An error occurred: {err}")
 
     return redirect(url_for('index'))
