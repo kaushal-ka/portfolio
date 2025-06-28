@@ -99,6 +99,15 @@
     <section id="contact">
       <h2>Contact Me</h2>
       <!-- Display flash messages -->
+       {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="flash-message">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+    {# 
     {% with messages = get_flashed_messages() %}
     {% if messages %}
         <ul>
@@ -107,16 +116,18 @@
             {% endfor %}
         </ul>
     {% endif %}
-{% endwith %}
+{% endwith %} 
+#}
 
-      <form class="contact-form" id="contactForm" action="{{ url_for('submit_contact') }}" method="POST">
+      <form class="contact-form" id="contactForm"> 
         <input type="text" name = "name" placeholder="Your Name" required />
         <input type="email" name = "email" placeholder="Your Email" required />
         <textarea name = "message" placeholder="Your Message" rows="5" required></textarea>
         <button type="submit">Send Message</button>
       </form>
     </section>
-
+    <!-- Link javascript AFTER html so elements exist -->
+ <script src="{{ url_for('static', filename='main.js') }}"></script>
     <script>
       // Smooth scrolling for navigation links
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

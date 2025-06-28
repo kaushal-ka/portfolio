@@ -172,3 +172,56 @@ button:hover {
         margin: 10px 0;
     }
 } */
+
+ /* ───────────────────────────────────────────
+   Base styling for flash message box
+   ─────────────────────────────────────────── */
+.flash-message {
+  /* fixed so it floats over page */
+  position: fixed;
+  /* top-center (change top:50% & translate Y for full center) */
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #4caf50;          /* success green */
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+
+  /* start transparent – .show will fade it in */
+  opacity: 0;
+  transition: opacity .4s ease;
+  z-index: 9999;
+
+  /* flex = message + dismiss btn side-by-side */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  pointer-events: none;  /* ignore pointer while hidden */
+}
+
+/* visible state (added by JS) */
+.flash-message.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* error variant (red background) */
+.flash-message.error { background: #f44336; }
+
+/* small “OK” button */
+.flash-message button {
+  background: #fff;
+  color: #333;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: .9rem;
+}
+
+/* optional: fade-out transition – opacity already animates */

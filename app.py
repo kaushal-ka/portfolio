@@ -1,9 +1,9 @@
-from flask import Flask, request, redirect, render_template, flash, url_for
+from flask import Flask, request, redirect, render_template, jsonify, url_for
 import mysql.connector
 from mysql.connector import Error
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a secure key
+app.secret_key = 'a2bbd46e9bb70cc4842adf4b34f54f06'  # Replace with a secure key
 
 # Database configuration
 db_config = {
@@ -26,8 +26,10 @@ def submit_contact():
     print(f"Name: {name}, Email: {email}, Message: {message}")
     # Basic validation can be added here if needed
     if not name or not email or not message:
-        flash("All fields are required!")
-        return redirect(url_for('index'))
+        # flash("All fields are required!")
+        # return redirect(url_for('index'))
+        return jsonify(status="error", message="All fields are required!"), 400
+    
 
     try:
         # Connect to the database
@@ -46,14 +48,19 @@ def submit_contact():
             # Close cursor and connection
             cursor.close()
             conn.close()
-
-            # <-- Here: flash success message after DB insert
-            flash("Thank you for your message! I'll get back to you soon.")
-        else:
-            flash("Unable to connect to the database.")
+            #including jsonify response
+            return jsonify(
+                status = "success",
+                message = "Thank you for your message! I'll get back to you soon.")
     except mysql.connector.Error as err:
-        print("MySQL Error:", err)
-        flash(f"An error occurred: {err}")
+            return jsonify(status ="error", message = f"Database error: {err}"), 500
+            # <-- Here: flash success message after DB insert
+        #     flash("Thank you for your message! I'll get back to you soon.")
+        # else:
+        #     flash("Unable to connect to the database.")
+    # except mysql.connector.Error as err:
+    #     print("MySQL Error:", err)
+    #     flash(f"An error occurred: {err}")
 
     return redirect(url_for('index'))
 
