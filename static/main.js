@@ -8,6 +8,7 @@ const form = document.getElementById("contactForm");
 const flash = document.getElementById("flash-message");
 form.addEventListener("submit", async(e) =>{
 e.preventDefault(); // stop normal page reload
+alert("Thank you for your message! I will get back to you soon😊😊.");
 const formData = new FormData(form);
 try {
     const res = await fetch("/submit_contact", {
@@ -42,6 +43,6 @@ function hideFlash(){
     flash.classList.remove("show"); // fades out (opacity transition)
     // Wait for CSS transition then hide fully
     setTimeout(() => { flash.style.display = "none"; }, 400);
-    
+
 
 }
